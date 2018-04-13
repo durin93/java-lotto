@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 public class LottoDAO {
-
+	
 	public void insert(String turnNo, LottoDTO lottoDTO) throws SQLException {
 		String sql = "insert into user_lotto values(?,?,?,?,?,?,?)";
 		try (Connection con = DBconnector.getInstance().getConnection();
@@ -26,14 +26,14 @@ public class LottoDAO {
 			e.printStackTrace();
 			System.out.println("user_lotto 테이블 insert 실패");
 		}
-
 	}
 
 	public List<LottoDTO> select(String turnNo) throws SQLException {
 		List<LottoDTO> lottos = new ArrayList<>();
 
 		try (Connection con = DBconnector.getInstance().getConnection();
-				PreparedStatement pstmt = DaoUtils.makePrepareStatement(con, "select * from user_lotto where turn_no = ?", turnNo, 1);
+				PreparedStatement pstmt = DaoUtils.makePrepareStatement(con,
+						"select * from user_lotto where turn_no = ?", turnNo, 1);
 				ResultSet rs = pstmt.executeQuery()) {
 			while (rs.next()) {
 				List<Integer> temp = Arrays.asList(rs.getInt("first_no"), rs.getInt("second_no"), rs.getInt("third_no"),
@@ -48,7 +48,6 @@ public class LottoDAO {
 		}
 		return lottos;
 	}
-	
 
 	public void delete() throws SQLException {
 		try (Connection con = DBconnector.getInstance().getConnection();
